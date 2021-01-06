@@ -1,5 +1,4 @@
-// example taken from https://www.sohamkamani.com/nodejs/rsa-encryption/
-import crypto from "crypto";
+import ntru from "@subatomiq/ntru";
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder("utf-8");
@@ -9,16 +8,14 @@ const rsaOptions = {
   modulusLength: 2048,
 };
 
-export const main = (message: string): string => {
-  const { publicKey, privateKey } = crypto.generateKeyPairSync(
-    "rsa",
-    rsaOptions
-  );
+export const main = async (message: string): Promise<string> => {
+  const crypto = await ntru();
+  const { publicKey, privateKey } = await crypto.keyPair();
 
   const messageBuffer: Uint8Array = encoder.encode(message);
 
-  const ct = crypto.publicEncrypt(publicKey, messageBuffer);
-  const d = crypto.privateDecrypt(privateKey, ct);
+  const ct = await crypto.encrypt(messageBuffer, publicKey);
+  const d = await crypto.decrypt(ct, privateKey);
 
   return decoder.decode(d);
 };
