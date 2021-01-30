@@ -1,6 +1,6 @@
 import { main } from "./index";
 
-test("decrypted string is original message", async () => {
+test("decrypted string is original message", () => {
   const message = "hello world";
-  expect(await main(message)).toEqual(message);
+  expect(main(message)).toEqual(message);
 });

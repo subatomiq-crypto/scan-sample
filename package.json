@@ -22,7 +22,5 @@
     "ts-jest": "^26.4.4",
     "typescript": "^4.1.3"
   },
-  "dependencies": {
-    "@subatomiq/ntru": "^0.0.7"
-  }
+  "dependencies": {}
 }
